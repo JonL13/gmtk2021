@@ -16,7 +16,9 @@ public class JoinedObjectController : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        playerController = player.GetComponent<PlayerController>();
+        if (player) {
+            playerController = player.GetComponent<PlayerController>();
+        }
 
         setObjectsColor(defaultColor);
         changeRenderWhenJoined(false);
@@ -25,9 +27,17 @@ public class JoinedObjectController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float playerDistance = Vector3.Distance(player.transform.position, transform.position);
+        float playerDistance = 1000f;
+        if (player != null) {
+            playerDistance = Vector3.Distance(player.transform.position, transform.position);
+        }
 
-        if (!joinedWithPlayer && playerDistance < playerController.joinDistance) {
+        float joinDistance = 0;
+        if(playerController != null) {
+            joinDistance = playerController.joinDistance;
+        }
+
+        if (!joinedWithPlayer && playerDistance < joinDistance) {
             joinedWithPlayer = true;
             playerController.linkedObjects.Add(gameObject);
 
@@ -35,7 +45,7 @@ public class JoinedObjectController : MonoBehaviour
             changeRenderWhenJoined(true);
         }
 
-        if (joinedWithPlayer && playerDistance > playerController.joinDistance) {
+        if (joinedWithPlayer && playerDistance > joinDistance) {
             joinedWithPlayer = false;
             playerController.linkedObjects.Remove(gameObject);
 

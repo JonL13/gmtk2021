@@ -5,8 +5,6 @@ using UnityEngine;
 public class EnemyDrainFuel : MonoBehaviour
 {
     public GameObject fuelContainerGameObject;
-    public float fuelDrainRate = 100f;
-
 
     private FuelController fuelController;
 
@@ -16,7 +14,8 @@ public class EnemyDrainFuel : MonoBehaviour
 
     private void OnTriggerStay(Collider other) {
         if (other.tag == "Enemy") {
-            fuelController.fuel -= other.gameObject.GetComponent<EnemyController>().fuelDrainRate * Time.deltaTime;
+            fuelController.fuel -= other.gameObject.GetComponent<EnemyController>().fuelDrainAmount;
+            other.gameObject.GetComponent<EnemyController>().kill(false);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,8 +9,10 @@ public class PlayerController : MonoBehaviour
     public float fuelTransferRate = 300f;
     public float joinDistance = 2.5f;
     public float fuelConsumptionRate = 1f;
+    public TextMeshProUGUI playerFuelDisplay;
+    public TextMeshProUGUI joinedFuelDisplay;
+    public List<GameObject> linkedObjects = new List<GameObject>(); // this is public because other scripts access it
 
-    public List<GameObject> linkedObjects = new List<GameObject>();
 
     private Rigidbody rb;
     private FuelController playerFuelController;
@@ -27,11 +30,11 @@ public class PlayerController : MonoBehaviour
         }
 
         transferFuel();
+        renderFuelDisplays();
     }
 
     void FixedUpdate() {
         controlMovement();
-
     }
 
     private void controlMovement() {
@@ -61,9 +64,6 @@ public class PlayerController : MonoBehaviour
                 FuelController linkedFuelContainer = linkedObject.GetComponent<FuelController>();
                 if (linkedFuelContainer != null) {
                     linkedFuelContainer.transferFuelFrom(playerFuelController, fuelTransferRate * Time.deltaTime);
-                    Debug.Log("playerFuel: " + playerFuelController.fuel + " linkedFuel: " + linkedFuelContainer.fuel);
-                } else {
-                    Debug.Log("linkedFuelContainer is NULL!");
                 }
             }
         }
@@ -74,11 +74,25 @@ public class PlayerController : MonoBehaviour
                 FuelController linkedFuelContainer = linkedObject.GetComponent<FuelController>();
                 if (linkedFuelContainer != null) {
                     playerFuelController.transferFuelFrom(linkedFuelContainer, fuelTransferRate * Time.deltaTime);
-                    Debug.Log("playerFuel: " + playerFuelController.fuel + " linkedFuel: " + linkedFuelContainer.fuel);
-                } else {
-                    Debug.Log("linkedFuelContainer is NULL!");
                 }
             }
         }
     }
+
+    private void renderFuelDisplays() {
+        if(linkedObjects.Count == 0 && joinedFuelDisplay.enabled) {
+            joinedFuelDisplay.enabled = false;
+        }else if(linkedObjects.Count > 0 && !joinedFuelDisplay.enabled) {
+            joinedFuelDisplay.enabled = true;
+        }
+
+        if (playerFuelDisplay != null) {
+            playerFuelDisplay.SetText("Player Fuel:\n" + Mathf.Floor(playerFuelController.fuel) + "/" + Mathf.Floor(playerFuelController.maxFuel));
+        }
+        if (joinedFuelDisplay.enabled) {
+            FuelController linkedFuelController = linkedObjects[0].GetComponent<FuelController>();
+            joinedFuelDisplay.SetText("Joined Fuel:\n" + Mathf.Floor(linkedFuelController.fuel) + "/" + Mathf.Floor(linkedFuelController.maxFuel));
+        }
+    }
+
 }

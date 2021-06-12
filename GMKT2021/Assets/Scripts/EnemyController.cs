@@ -6,13 +6,10 @@ public class EnemyController : MonoBehaviour
 {
     public float maxSpeed = 5f;
     public GameObject fuel;
-    public float fuelDrainRate = 100f;
+    public float fuelDrainAmount = 500f;
 
     private GameObject home;
     private Rigidbody rb;
-
-   
-
 
     void Start()
     {
@@ -32,8 +29,14 @@ public class EnemyController : MonoBehaviour
     }
 
     public void kill() {
+        kill(true);
+    }
+
+    public void kill(bool spawnFuel) {
         Vector3 deathPosition = gameObject.transform.position;
         Destroy(gameObject);
-        Instantiate(fuel, deathPosition, Quaternion.identity);
+        if (spawnFuel) {
+            Instantiate(fuel, deathPosition, Quaternion.identity);
+        }
     }
 }
