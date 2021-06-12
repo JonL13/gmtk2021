@@ -5,17 +5,18 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
+    private FuelController playerFuelController;
 
     public float movementSpeed = 5;
     public int joinDistance = 3;
-    public float fuel = 5000;
-
+    //public float fuel = 5000;
 
     public List<GameObject> linkedObjects = new List<GameObject>();
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerFuelController = GetComponent<FuelController>();
     }
 
     private void Update() {
@@ -24,27 +25,55 @@ public class PlayerController : MonoBehaviour
         } else {
             GetComponent<Renderer>().material.color = Color.blue;
         }
-
-        Debug.Log(linkedObjects.Count);
-        foreach (GameObject gameObject in linkedObjects) {
-            Debug.Log(gameObject.name);
-        }
     }
 
     void FixedUpdate() {
         controlMovement();
+        transferFuel();
+
     }
 
     private void controlMovement() {
-        if (fuel > 0) {
+        if (playerFuelController.fuel > 0) {
             Vector3 force = new Vector3(-movementSpeed * Input.GetAxis("Vertical"), 0, movementSpeed * Input.GetAxis("Horizontal"));
             rb.AddForce(force);
 
-            fuel -= force.magnitude;
+            playerFuelController.fuel -= force.magnitude;
         } else {
-            fuel = 0;
+            playerFuelController.fuel = 0;
         }
 
-        Debug.Log("Player fuel: " + fuel);
+    }
+
+    private void transferFuel() {
+        if(linkedObjects.Count == 0) {
+            return;
+        }
+
+        // give fuel to objects
+        if (Input.GetButton("Fire1")) {
+            foreach (GameObject linkedObject in linkedObjects) {
+                FuelController linkedFuelContainer = linkedObject.GetComponent<FuelController>();
+                if (linkedFuelContainer != null) {
+                    linkedFuelContainer.transferFuelFrom(playerFuelController, 10f);
+                    Debug.Log("playerFuel: " + playerFuelController.fuel + "linkedFuel: " + linkedFuelContainer.fuel);
+                } else {
+                    Debug.Log("linkedFuelContainer is NULL!");
+                }
+            }
+        }
+
+        // take fuel from linked objects
+        else if (Input.GetButton("Fire2")) {
+            foreach (GameObject linkedObject in linkedObjects) {
+                FuelController linkedFuelContainer = linkedObject.GetComponent<FuelController>();
+                if (linkedFuelContainer != null) {
+                    playerFuelController.transferFuelFrom(linkedFuelContainer, 10f);
+                    Debug.Log("playerFuel: " + playerFuelController.fuel + "linkedFuel: " + linkedFuelContainer.fuel);
+                } else {
+                    Debug.Log("linkedFuelContainer is NULL!");
+                }
+            }
+        }
     }
 }

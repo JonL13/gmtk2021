@@ -10,7 +10,6 @@ public class JoinedObjectController : MonoBehaviour
     private bool joinedWithPlayer = false;
 
     public Color defaultColor;
-    public Color joinedColor;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +24,6 @@ public class JoinedObjectController : MonoBehaviour
     void Update()
     {
         float playerDistance = Vector3.Distance(player.transform.position, transform.position);
-        //Debug.Log("Distance from player: " + playerDistance);
 
         if (!joinedWithPlayer && playerDistance < playerController.joinDistance) {
             joinedWithPlayer = true;
