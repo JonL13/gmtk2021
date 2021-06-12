@@ -29,4 +29,8 @@ public class FuelController : MonoBehaviour
         fuel += amount;
         fromFuelController.fuel -= amount;
     }
+
+    public void addFuel(float amount) {
+        fuel += amount;
+    }
 }
