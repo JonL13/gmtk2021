@@ -13,7 +13,7 @@ public class EnemySpawnerController : MonoBehaviour
 
 
     void Start(){
-        
+        spawnTimer = spawnRateInSeconds - 1;
     }
 
     void Update(){

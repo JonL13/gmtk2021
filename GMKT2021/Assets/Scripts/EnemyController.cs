@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
     private void moveTowardHome() {
         transform.LookAt(home.transform);
         if (rb.velocity.magnitude < maxSpeed) {
-            rb.AddForce(transform.forward);
+            rb.AddForce(1f * transform.forward);
         }
     }
 

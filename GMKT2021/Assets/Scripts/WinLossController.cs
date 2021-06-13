@@ -8,7 +8,7 @@ public class WinLossController : MonoBehaviour{
 
     public TextMeshProUGUI missionOutcomeDisplay;
     public TextMeshProUGUI missionOutcomeSubtextDisplay;
-    public string nextSceneName;
+    public string nextSceneName = "EndScene";
 
     private FuelController homeFuelController;
     private bool hasWon = false;

@@ -45,7 +45,7 @@ public class TurretController : MonoBehaviour
 
         Rigidbody projectileInstance;
         projectileInstance = Instantiate(projectile, turretEnd.position, turretEnd.rotation) as Rigidbody;
-        projectileInstance.AddForce(turretEnd.forward * 1500);
+        projectileInstance.AddForce(turretEnd.forward * 2500);
         projectileInstance.gameObject.transform.parent = gameObject.transform;
     }
 }

@@ -10,9 +10,12 @@ public class FuelPickupController : MonoBehaviour
     private bool isFloatingUp = false;
     private float floatingSpeed = .5f;
     private float lifeTimer = 0f;
+    private Vector3 startingPosition;
 
 
-    void Start(){}
+    void Start(){
+        startingPosition = gameObject.transform.position;
+    }
 
     void Update()
     {
@@ -38,13 +41,13 @@ public class FuelPickupController : MonoBehaviour
 
     private void floatUpAndDown() {
         if (isFloatingUp) {
-            if (transform.position.y < .75) {
+            if (transform.position.y < startingPosition.y + .75) {
                 transform.position += new Vector3(0, floatingSpeed * Time.fixedDeltaTime, 0);
             } else {
                 isFloatingUp = false;
             }
         } else {
-            if (transform.position.y > .1) {
+            if (transform.position.y > startingPosition.y + .1) {
                 transform.position -= new Vector3(0, floatingSpeed * Time.fixedDeltaTime, 0);
             } else {
                 isFloatingUp = true;

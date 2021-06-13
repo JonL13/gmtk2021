@@ -726,7 +726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionOutcomeDisplay: {fileID: 8536417969174143181}
   missionOutcomeSubtextDisplay: {fileID: 1614836660056500342}
-  nextSceneName: 
+  nextSceneName: EndScene
 --- !u!1 &3221405406943042675
 GameObject:
   m_ObjectHideFlags: 0
