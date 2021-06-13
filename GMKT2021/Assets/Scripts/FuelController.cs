@@ -7,8 +7,6 @@ public class FuelController : MonoBehaviour
 {
     public float fuel = 0;
     public float maxFuel = 1000;
-    public TextMeshProUGUI fuelDisplay;
-    public string fuelDisplayName = "";
 
     public void transferFuelFrom(FuelController fromFuelController, float amount) {
         if (fuel >= maxFuel) {

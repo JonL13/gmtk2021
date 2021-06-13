@@ -8,13 +8,13 @@ public class TurretController : MonoBehaviour
     public Transform turretBase;
     public Transform turretEnd;
     public GameObject rangeCylinder;
-    FuelController fuelController;
-
+    public AudioSource turretShot;
 
     public float shootingRange;
     public float shootingCooldown = 3f;
     public float fuelPerShot = 10f;
 
+    private FuelController fuelController;
     private float shootingTimer;
     public GameObject target; // target will be set by the TurretTargeter script
 
@@ -41,6 +41,7 @@ public class TurretController : MonoBehaviour
 
     void shootTarget() {
         fuelController.fuel -= fuelPerShot;
+        turretShot.Play();
 
         Rigidbody projectileInstance;
         projectileInstance = Instantiate(projectile, turretEnd.position, turretEnd.rotation) as Rigidbody;

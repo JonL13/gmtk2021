@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JoinedObjectController : MonoBehaviour
-{
+public class JoinedObjectController : MonoBehaviour {
+
+    public Material defaultMaterial;
+    public Material joinedMaterial;
+    public GameObject[] renderWhenJoined;
+
+    private bool joinedWithPlayer = false;
     private GameObject player;
     private PlayerController playerController;
     private Renderer[] thisRenderers;
-    private bool joinedWithPlayer = false;
-
-    public Color defaultColor;
-    public GameObject[] renderWhenJoined;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,8 @@ public class JoinedObjectController : MonoBehaviour
             playerController = player.GetComponent<PlayerController>();
         }
 
-        setObjectsColor(defaultColor);
+
+        setObjectsMaterial(defaultMaterial);
         changeRenderWhenJoined(false);
     }
 
@@ -41,7 +43,7 @@ public class JoinedObjectController : MonoBehaviour
             joinedWithPlayer = true;
             playerController.linkedObjects.Add(gameObject);
 
-            setObjectsColor(Color.green);
+            setObjectsMaterial(joinedMaterial);
             changeRenderWhenJoined(true);
         }
 
@@ -49,16 +51,17 @@ public class JoinedObjectController : MonoBehaviour
             joinedWithPlayer = false;
             playerController.linkedObjects.Remove(gameObject);
 
-            setObjectsColor(defaultColor);
+            setObjectsMaterial(defaultMaterial);
             changeRenderWhenJoined(false);
         }
     }
 
-    private void setObjectsColor(Color color) {
+    private void setObjectsMaterial(Material material) {
         Renderer[] thisRenderers = GetComponentsInChildren<Renderer>(); // TODO optimization
         foreach (Renderer renderer in thisRenderers) {
-            if (!renderer.gameObject.name.Equals("RangeCylinder")) {
-                renderer.material.color = color;
+            string rendererTag = renderer.gameObject.tag;
+            if (!rendererTag.Equals("Range") && !rendererTag.Equals("Fuel")) {
+                renderer.material = material;
             }
         }
     }

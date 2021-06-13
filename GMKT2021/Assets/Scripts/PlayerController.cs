@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI playerFuelDisplay;
     public TextMeshProUGUI joinedFuelDisplay;
     public List<GameObject> linkedObjects = new List<GameObject>(); // this is public because other scripts access it
-
+    public AudioSource refuelingAudioSource;
+    public AudioSource expendingFuelAudioSource;
 
     private Rigidbody rb;
     private FuelController playerFuelController;
@@ -23,11 +24,13 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Update() {
+        /*
         if(linkedObjects.Count > 0) {
             GetComponent<Renderer>().material.color = Color.green;
         } else {
             GetComponent<Renderer>().material.color = Color.blue;
         }
+        */
 
         transferFuel();
         renderFuelDisplays();
@@ -38,17 +41,18 @@ public class PlayerController : MonoBehaviour
     }
 
     private void controlMovement() {
-        if(playerFuelController.fuel == 0 && (Input.GetAxis("Vertical") + Input.GetAxis("Horizontal") != 0)) {
-            Debug.Log("Player is out of fuel");
-        }
-
+        Vector3 force = new Vector3(-movementSpeed * Input.GetAxis("Vertical"), 0, movementSpeed * Input.GetAxis("Horizontal"));
         if (playerFuelController.fuel > 0) {
-            Vector3 force = new Vector3(-movementSpeed * Input.GetAxis("Vertical"), 0, movementSpeed * Input.GetAxis("Horizontal"));
             rb.AddForce(force);
-
             playerFuelController.fuel -= force.magnitude * fuelConsumptionRate;
         } else {
             playerFuelController.fuel = 0;
+        }
+
+        if(Input.GetAxis("Vertical") + Input.GetAxis("Horizontal") != 0 
+            && rb.velocity.magnitude > 1 
+            && !expendingFuelAudioSource.isPlaying) {
+            expendingFuelAudioSource.Play();
         }
 
     }
@@ -56,6 +60,14 @@ public class PlayerController : MonoBehaviour
     private void transferFuel() {
         if(linkedObjects.Count == 0) {
             return;
+        }
+
+        if(Input.GetButtonDown("Fire1") && playerFuelController.fuel > 0 && !refuelingAudioSource.isPlaying) {
+            refuelingAudioSource.Play();
+        }
+
+        if(Input.GetButtonUp("Fire1") && refuelingAudioSource.isPlaying) {
+            refuelingAudioSource.Stop();
         }
 
         // give fuel to objects
@@ -80,6 +92,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private void renderFuelDisplays() {
+        if(!playerFuelDisplay || !joinedFuelDisplay) {
+            return;
+        }
+
         if(linkedObjects.Count == 0 && joinedFuelDisplay.enabled) {
             joinedFuelDisplay.enabled = false;
         }else if(linkedObjects.Count > 0 && !joinedFuelDisplay.enabled) {

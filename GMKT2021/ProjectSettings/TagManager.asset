@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Bullet
   - Arena
+  - Fuel
+  - Range
   layers:
   - Default
   - TransparentFX
