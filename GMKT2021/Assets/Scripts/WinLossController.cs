@@ -9,10 +9,12 @@ public class WinLossController : MonoBehaviour{
     public TextMeshProUGUI missionOutcomeDisplay;
     public TextMeshProUGUI missionOutcomeSubtextDisplay;
     public string nextSceneName = "EndScene";
+    public bool isWinFlyAway = true;
 
     private FuelController homeFuelController;
     private bool hasWon = false;
     private bool hasLost = false;
+
 
     void Start(){
         homeFuelController = gameObject.GetComponent<FuelController>();
@@ -52,6 +54,12 @@ public class WinLossController : MonoBehaviour{
         if(homeFuelController.fuel < 0) {
             hasLost = true;
             loseGame();
+        }
+    }
+
+    void FixedUpdate() {
+        if (hasWon && isWinFlyAway) {
+            gameObject.transform.position = gameObject.transform.position + new Vector3(0, 5 * Time.deltaTime, 0);
         }
     }
 

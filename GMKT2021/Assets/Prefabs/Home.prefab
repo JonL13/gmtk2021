@@ -615,6 +615,7 @@ GameObject:
   - component: {fileID: 3221405405402758694}
   - component: {fileID: 1992144008733547769}
   - component: {fileID: 5009906961257074313}
+  - component: {fileID: 7268444951419429237}
   m_Layer: 0
   m_Name: Home
   m_TagString: Untagged
@@ -727,6 +728,19 @@ MonoBehaviour:
   missionOutcomeDisplay: {fileID: 8536417969174143181}
   missionOutcomeSubtextDisplay: {fileID: 1614836660056500342}
   nextSceneName: EndScene
+  isWinFlyAway: 1
+--- !u!114 &7268444951419429237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3221405405402758699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adcda18360df156499d9382d5027ea97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3221405406943042675
 GameObject:
   m_ObjectHideFlags: 0

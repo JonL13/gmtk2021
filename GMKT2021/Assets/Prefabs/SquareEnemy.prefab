@@ -111,6 +111,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 500
   fuel: {fileID: 7192663896407874719, guid: 6e62874b2bf1189439dccb07d7f985d5, type: 3}
+  fuelDrainAmount: 500
+  explosionParticleSystem: {fileID: 8774350839850811556, guid: 368a07e4f05206045b3abf51eb967f93, type: 3}
 --- !u!54 &3312517797673477445
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -511,6 +511,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5009906961257074313, guid: 224520837748c1849b12d63a712b36cc, type: 3}
+      propertyPath: isWinFlyAway
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5009906961257074313, guid: 224520837748c1849b12d63a712b36cc, type: 3}
       propertyPath: nextSceneName
       value: MainMenu
       objectReference: {fileID: 0}

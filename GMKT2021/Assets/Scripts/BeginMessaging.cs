@@ -17,6 +17,10 @@ public class BeginMessaging : MonoBehaviour
         "Use WASD or the ARROW KEYS to move\n" +
         "Use LMB or CTRL to give fuel\n" +
         "Use RMB or ALT to take fuel\n" +
+        "Use MOUSE WHEEL to ZOOM IN/OUT",
+
+        "Press F1 at any time to EXIT",
+
         "Press ENTER to start"
     };
 

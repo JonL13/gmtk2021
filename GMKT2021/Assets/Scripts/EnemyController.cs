@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     public float maxSpeed = 5f;
     public GameObject fuel;
     public float fuelDrainAmount = 500f;
+    public ParticleSystem explosionParticleSystem; 
 
     private GameObject home;
     private Rigidbody rb;
@@ -37,6 +38,10 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
         if (spawnFuel) {
             Instantiate(fuel, deathPosition, Quaternion.identity);
+        }
+        if(explosionParticleSystem != null) {
+            ParticleSystem partSys = Instantiate(explosionParticleSystem, deathPosition, Quaternion.identity) as ParticleSystem;
+            partSys.Play();
         }
     }
 }
